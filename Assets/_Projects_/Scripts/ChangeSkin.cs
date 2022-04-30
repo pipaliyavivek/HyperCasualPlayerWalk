@@ -8,6 +8,7 @@ public class ChangeSkin : MonoBehaviour
 {
 
     public List<GameObject> AllPlayer = new List<GameObject>();
+    public List<GameObject> PlayerInGame = new List<GameObject>();
     public List<Button> Select = new List<Button>();
     public Button OpenPenal;
     public Button ClosedPenal;
@@ -18,6 +19,7 @@ public class ChangeSkin : MonoBehaviour
 
     public GameObject PlayerRoot;
     public GameObject Ground;
+    public Character m_Charactor;
 
     private void Start()
     {
@@ -47,18 +49,22 @@ public class ChangeSkin : MonoBehaviour
     {
         //Debug.Log("Is Clicked _ " + Button);
         AllPlayer.ForEach(x => x.SetActive(false));
+
         if (m_Dummylist.Find(x => x.name == Button))
         {
             m_PlayerPrice.text = "Select";
             var Charactor = AllPlayer.Find(x => x.name == Button);
             Charactor.SetActive(true);
             Charactor.transform.localPosition = new Vector3(0, -335f, -200f);
+
         }
         else
         {
             var Charactor = AllPlayer.Find(x => x.name == Button);
             Charactor.SetActive(true);
             Charactor.transform.localPosition = new Vector3(0, -335f, -200f);
+            //PlayerInGame.Find(x => x.name == Button).SetActive(true);
+            //m_Charactor.SetAnimator();
             switch (Button)
             {
                 case "Man_red":
@@ -113,13 +119,22 @@ public class ChangeSkin : MonoBehaviour
             var after = currentcoins - buycost;
             m_CurrentCoinText.text = after.ToString();
             m_PlayerPrice.text = "Select";
-            Debug.Log("PlayerName" + AllPlayer.Find(x => x.activeInHierarchy).name);
+            //Debug.Log("PlayerName" + AllPlayer.Find(x => x.activeInHierarchy).name);
             m_Dummylist.Add(AllPlayer.Find(x => x.activeInHierarchy));
+            SetPlayer(AllPlayer.Find(x => x.activeInHierarchy).name);
             //m_PlayerPrice.transform.parent.gameObject.SetActive(false);
         }
         else
         {
             Debug.Log("Not Enogh Coin");
         }
+    }
+    public void SetPlayer(string l_Name)
+    {
+        PlayerInGame.ForEach(x => x.SetActive(false));
+        Debug.Log(l_Name);
+        PlayerInGame.Find(x => x.name == l_Name).SetActive(true);
+        //4Debug.Log("Name Of Charactor: "+PlayerInGame.Find(x => x.name == l_Name).name);
+        m_Charactor.SetAnimator();
     }
 }

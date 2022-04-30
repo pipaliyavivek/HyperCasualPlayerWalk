@@ -11,30 +11,39 @@ public class Character : MonoBehaviour
     [SerializeField] public Animator m_Animator;
     [SerializeField] public Transform m_Target;
     [SerializeField] public float m_MoveSpeed;
+    public bool IsMove = false;
     private void Start()
     {
         m_Animator = GetComponentInChildren<Animator>();
     }
+    public void SetAnimator()
+    {
+        m_Animator = GetComponentInChildren<Animator>(); ;
+    }
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !IsMove)
         {
             if (Vector3.Distance(m_Target.position, transform.position) > 0.15f)
             {
                 transform.LookAt(m_Target);
                 m_TargetRoot.position = transform.position;
                 transform.Translate((Vector3.forward) * Time.deltaTime * (m_MoveSpeed));
-                m_Animator.enabled = true;
+                m_Animator.SetBool("IsRunning", true);
+
             }
             else
             {
-                m_Animator.enabled = false;
+                m_Animator.SetBool("IsRunning", false);
             }
         }
-        else
+        if (Input.GetMouseButtonUp(0))
         {
-            m_Animator.enabled = false;
+            m_Animator.SetBool("IsRunning", false);
         }
     }
+    public void StartGame()
+    {
+        IsMove = false;
+    }
 }
-
