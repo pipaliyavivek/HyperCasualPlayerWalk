@@ -56,7 +56,6 @@ public class ChangeSkin : MonoBehaviour
             var Charactor = AllPlayer.Find(x => x.name == Button);
             Charactor.SetActive(true);
             Charactor.transform.localPosition = new Vector3(0, -335f, -200f);
-
         }
         else
         {
